@@ -30,3 +30,11 @@ rule "ICICI Card Offer" {
         discount.percent: 10
         discount.name: "ICICI Bank Offer"
 }
+
+rule "Broken Rule" {
+    priority: 300
+    when: customer_tier == "GOLD"
+    then:
+        discount.name: "This Will Break"
+        discount.percent: "fifty"  # not a number
+}

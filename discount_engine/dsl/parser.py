@@ -1,26 +1,9 @@
 import re
 import ast
-from typing import List
 
-
-class DSLRule:
-    def __init__(
-        self,
-        name,
-        condition,
-        actions,
-        priority=100,
-        exclusive=False,
-        scope="cart",
-        code=None,
-    ):
-        self.name = name
-        self.condition = condition
-        self.actions = actions
-        self.priority = priority
-        self.exclusive = exclusive
-        self.scope = scope
-        self.code = code.upper() if code else None
+from dsl.types import DSLRule
+from dsl.validator import DSLRuleValidator
+from dsl.logger import logger
 
 
 class DSLParser:
@@ -48,9 +31,13 @@ class DSLParser:
             )
             scope = self._extract_line(body, "scope:", fallback="cart")
             code = self._extract_line(body, "code:", fallback=None)
-            rules.append(
-                DSLRule(name, condition, actions, priority, exclusive, scope, code)
-            )
+
+            rule = DSLRule(name, condition, actions, priority, exclusive, scope, code)
+
+            if DSLRuleValidator.validate(rule):
+                rules.append(rule)
+            else:
+                logger.warning(f"Skipping invalid rule: {name}")
 
         return rules
 

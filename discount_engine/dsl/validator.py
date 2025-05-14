@@ -1,4 +1,4 @@
-from dsl.parser import DSLRule
+from dsl.types import DSLRule
 from dsl.logger import logger
 
 
