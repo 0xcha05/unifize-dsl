@@ -9,6 +9,24 @@ This engine applies discounts to shopping carts based on rules written in a simp
 - Conditions are evaluated against each cart item when needed (e.g. brand/category).
 - Discounts are applied to the current price, one after another.
 
+## Rule Structure
+
+Each rule follows this basic format:
+
+rule "Unique Rule Name" {
+    priority: <number>         # Lower number = higher priority
+    exclusive: true|false      # If true, no other rule will run after this
+    scope: cart|item           # 'cart' (default) or 'item'
+    code: "OPTIONALCODE123"    # Optional. If provided, rule is only applied when this code is used
+
+    when: <logical expression> # Condition under which rule is applied
+
+    then:
+        discount.percent: <number>    # Discount percentage (e.g., 10 for 10%)
+        discount.name: "Label Name"   # Name shown in discount summary
+}
+All fields except priority, when, and then: block are optional.
+
 ## Variables You Can Use in `when`
 
 You can write expressions using these variables:
