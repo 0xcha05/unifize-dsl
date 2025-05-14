@@ -12,7 +12,7 @@ This engine applies discounts to shopping carts based on rules written in a simp
 ## Rule Structure
 
 Each rule follows this basic format:
-
+```dsl
 rule "Unique Rule Name" {
     priority: <number>         # Lower number = higher priority
     exclusive: true|false      # If true, no other rule will run after this
@@ -25,6 +25,7 @@ rule "Unique Rule Name" {
         discount.percent: <number>    # Discount percentage (e.g., 10 for 10%)
         discount.name: "Label Name"   # Name shown in discount summary
 }
+```
 All fields except priority, when, and then: block are optional.
 
 ## Variables You Can Use in `when`
@@ -60,4 +61,6 @@ Other fallback 150+
 
 ## run
 fake data and a testcase is already configured:
+```bash
 python3 main.py
+```
